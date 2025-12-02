@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+langchain
+langgraph
+pydantic
+sqlalchemy
+psycopg2-binary
+python-dotenv
+google-generativeai
+requests
+typing_extensions
