@@ -1,62 +1,55 @@
-#  Multi-Agent Onboarding Workflow System  
-**AI-powered workflow engine for analyzing onboarding plans using Task Extraction, Status Prediction, and Recommendation Agents.**  
-Built with **FastAPI**, **LangGraph**, **Neon PostgreSQL**, and  **Gemini API integration**.
+Multi-Agent Onboarding Workflow (FastAPI + LangGraph + PostgreSQL)
 
----
+This project implements an AI-powered multi-agent workflow to analyze, break down, and optimize employee onboarding plans. It uses:
 
-##  Overview  
-This project is an **LLM-powered multi-agent onboarding workflow system**.  
-It takes an onboarding plan as input and automatically:
+LangGraph for agent orchestration
 
-1️⃣ Extracts tasks  
-2️⃣ Analyzes the status of each task  
-3️⃣ Generates actionable recommendations  
-4️⃣ Saves everything into a Neon PostgreSQL database  
-5️⃣ Returns a structured response with tasks, status, recommendations & logs  
+FastAPI for the API service
 
----
+Neon PostgreSQL for persistence
 
-##  Architecture
+Modular agents (task extraction, task status analysis, recommendations)
 
-                        ┌───────────────────────────────┐
-                        │          Client / UI           │
-                        │ (Swagger, Postman, Frontend)   │
-                        └───────────────┬───────────────┘
-                                        │ HTTP Request
-                                        ▼
-                            ┌──────────────────────┐
-                            │      FastAPI API     │
-                            │  /run_onboarding...  │
-                            └───────┬──────────────┘
-                                    │
-                                    ▼
-                      ┌─────────────────────────────┐
-                      │     LangGraph Workflow       │
-                      │  (State Machine + Agents)    │
-                      └───────────┬──────────────────┘
-                                  │
-                ┌─────────────────┼──────────────────┐
-                │                 │                  │
-                ▼                 ▼                  ▼
-        ┌─────────────┐  ┌─────────────────┐  ┌────────────────────┐
-        │ Task Agent   │  │ Status Agent    │ │ RecommendationAgent│
-        │ Extracts     │  │ Predicts status │ │ Creates suggestions│
-        │ structured   │  │ (risk/ok/...)   │ │ from task insights │
-        │ tasks        │  └─────────────────┘ └────────────────────┘
-        └─────────────┘
-                │
-                ▼
-     ┌────────────────────┐
-     │   Aggregated State │
-     │ (tasks + statuses +│
-     │ recommendations)    │
-     └───────────┬────────┘
-                 │
-                 ▼
-       ┌────────────────────────┐
-       │ Neon PostgreSQL Cloud   │
-       │   - runs               │
-       │   - tasks              │
-       │   - status_analysis    │
-       │   - recommendations    │
-       └────────────────────────┘
+The system converts a raw onboarding plan text into structured tasks, status insights, and actionable recommendations, while saving all results into a cloud database.
+
+
+🚀 Features
+
+Multi-agent reasoning workflow using LangGraph
+
+Task extraction from free-text onboarding plans
+
+Task status predictions (ok, at_risk, missing_deadline, etc.)
+
+Recommendations generator
+Complete run tracking (logs, timestamps)
+Full relational database storage (runs, tasks, status, recommendations)
+API endpoints using FastAPI
+Ready for deployment (Render/)
+
+#Agents:
+Task Agent — extracts tasks
+Status Agent — analyzes task risk
+Recommendation Agent — makes improvement suggestions
+
+Database Tables
+runs
+tasks
+status_analysis
+recommendations
+
+📝 Brief Description of Approach
+The workflow uses multi-agent reasoning where each agent focuses on a specific task:
+
+Task Agent extracts tasks
+
+Status Agent classifies task risk
+
+Recommendation Agent improves the onboarding plan
+
+LangGraph ensures a deterministic state machine workflow where each agent updates a shared state.
+All execution results are stored in NeonDB for auditability.
+
+
+
+
